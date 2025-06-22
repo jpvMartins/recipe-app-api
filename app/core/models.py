@@ -8,6 +8,7 @@ from django.contrib.auth.models import (
     PermissionsMixin
 )
 
+
 class UserManager(BaseUserManager):
     """
     Manager for users.
@@ -26,10 +27,17 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-"""
-    AbstractBaseUser: Functionality for auth sytem.
-    PermissionsMixin: Functionality for permissions & field .
-"""
+    def create_superuser(self, email, password):
+        """
+            Create and return a new superuser.
+        """
+        user = self.create_user(email, password)
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self._db)
+        return user
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     """
     User in the system.

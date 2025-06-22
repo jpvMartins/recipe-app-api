@@ -1,8 +1,13 @@
+
+
 """
 Testes for models.
 """
-from django.test import TestCase # base class for tests
-from django.contrib.auth import get_user_model # helper function : get the user model
+
+
+from django.test import TestCase   # base class for tests
+from django.contrib.auth import get_user_model
+# helper function : get the user model
 
 
 class ModelTests(TestCase):
@@ -17,8 +22,8 @@ class ModelTests(TestCase):
         email = "test@exemple.com"
         password = "testpass123"
         user = get_user_model().objects.create_user(
-            email = email,
-            password = password,
+            email=email,
+            password=password,
         )
 
         self.assertEqual(user.email, email)
@@ -34,8 +39,11 @@ class ModelTests(TestCase):
             ['TESTE3@EXAMPLE.COM', 'TESTE3@example.com'],
             ['test4@example.com', 'test4@example.com'],
         ]
-        for email,expected in sample_emails:
-            user = get_user_model().objects.create_user(email=email, password='sample123')
+        for email, expected in sample_emails:
+            user = get_user_model().objects.create_user(
+                email=email,
+                password='sample123'
+            )
             self.assertEqual(user.email, expected)
 
     def test_new_user_without_email_raises_error(self):
@@ -43,4 +51,16 @@ class ModelTests(TestCase):
         Test creating user without email raises error.
         """
         with self.assertRaises(ValueError):
-            get_user_model().objects.create_user('','test123')
+            get_user_model().objects.create_user('', 'test123')
+
+    def test_create_superuser(self):
+        """
+        Test creating a superuser.
+        """
+        user = get_user_model().objects.create_superuser(
+            'test@exemple.com',
+            'test123',
+        )
+
+        self.assertTrue(user.is_superuser)
+        self.assertTrue(user.is_staff)
