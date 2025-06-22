@@ -16,7 +16,7 @@ class AdminSiteTests(TestCase):
         """
         Create user and client for testing.
         """
-        self.client = Client() #  Allow the client to make requests
+        self.client = Client()  # Allow the client to make requests
         self.admin_user = get_user_model().objects.create_superuser(
             email='admin@example.com',
             password='password123'

@@ -7,10 +7,12 @@ from django.utils.translation import gettext_lazy as _
 
 from core import models
 
+
 class UserAdmin(BaseUserAdmin):
     """
     Define the admin pages for user.
     """
+
     ordering = ['id']
     list_display = ['email', 'name']
     fieldsets = (
@@ -44,4 +46,6 @@ class UserAdmin(BaseUserAdmin):
                 'is_superuser')
         }),
     )
+
+
 admin.site.register(models.User, UserAdmin)
